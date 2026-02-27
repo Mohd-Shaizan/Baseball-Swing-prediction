@@ -10,7 +10,7 @@ services:
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
-        value: 3.10.0
+        value: 3.10.14
       # If you are using Gemini, add your API key as a secret in the Render Dashboard instead of here
       - key: GOOGLE_GENAI_API_KEY
         sync: false
