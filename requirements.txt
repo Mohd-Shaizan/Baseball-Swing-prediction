@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+python-multipart
+jinja2
+google-genai
+opencv-python-headless
+mediapipe
+numpy
+pandas
+joblib
+scikit-learn
