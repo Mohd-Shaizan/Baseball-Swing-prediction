@@ -1,11 +1,10 @@
-python= 3.10
 fastapi
 uvicorn
 python-multipart
 jinja2
 google-genai
 opencv-python-headless
-mediapipe==0.10.30
+mediapipe==0.10.9
 protobuf==3.20.3
 numpy
 pandas
