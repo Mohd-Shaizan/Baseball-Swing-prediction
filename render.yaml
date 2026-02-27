@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: baseball-swing-prediction
+    runtime: python
+    # This command installs standard dependencies and system-level libraries needed for OpenCV
+    buildCommand: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    # Start command for Uvicorn
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      # If you are using Gemini, add your API key as a secret in the Render Dashboard instead of here
+      - key: GOOGLE_GENAI_API_KEY
+        sync: false
+    # Crucial for handling video/image uploads on Render's ephemeral filesystem
+    disk:
+      name: uploads-storage
+      mountPath: /uploads
+      sizeGB: 1
