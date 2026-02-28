@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Baseball Swing Intelligence</title>
+
+<style>
+:root {
+    --bg: radial-gradient(circle at top, #111827, #020617);
+    --card: rgba(255,255,255,0.08);
+    --text: #ffffff;
+    --muted: #9ca3af;
+    --primary: #22d3ee;
+    --accent: #8b5cf6;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Inter, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* ================= NAV ================= */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(2,6,23,0.7);
+    backdrop-filter: blur(14px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+}
+
+nav .logo {
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+nav a {
+    color: var(--muted);
+    margin-left: 22px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+nav .cta {
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #020617;
+    font-weight: 800;
+}
+
+/* ================= HERO ================= */
+.hero {
+    text-align: center;
+    padding: 130px 20px 90px;
+}
+
+.hero h1 {
+    font-size: 56px;
+    max-width: 1000px;
+    margin: auto;
+    background: linear-gradient(90deg, #22d3ee, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    margin-top: 22px;
+    font-size: 20px;
+    color: var(--muted);
+}
+
+.hero .hero-actions {
+    margin-top: 40px;
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+}
+
+.hero .hero-actions a {
+    padding: 14px 22px;
+    border-radius: 14px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.primary {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #020617;
+}
+
+.secondary {
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text);
+}
+
+/* ================= TRUST ================= */
+.trust {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 70px;
+}
+
+/* ================= FLOW ================= */
+.flow {
+    max-width: 1100px;
+    margin: 80px auto;
+    display: flex;
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.flow .step {
+    flex: 1;
+    padding: 26px;
+    background: var(--card);
+    border-radius: 18px;
+    text-align: center;
+}
+
+/* ================= CARD ================= */
+.card {
+    max-width: 760px;
+    margin: 100px auto;
+    padding: 42px;
+    background: var(--card);
+    border-radius: 24px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 35px 90px rgba(0,0,0,0.55);
+}
+
+/* ================= TOGGLE ================= */
+.toggle {
+    display: flex;
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 32px;
+}
+
+.toggle button {
+    flex: 1;
+    padding: 15px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.toggle button.active {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: #020617;
+    font-weight: 800;
+}
+
+/* ================= FORM ================= */
+input[type=file] {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255,255,255,0.15);
+    color: var(--text);
+}
+
+button.submit {
+    margin-top: 18px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+/* ================= RESULT ================= */
+.result {
+    margin-top: 26px;
+    padding: 18px;
+    border-radius: 14px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.hit { background:#16a34a; }
+.swing { background:#eab308; color:#020617; }
+.strike { background:#dc2626; }
+
+/* ================= VISUAL ================= */
+.visual-zone {
+    margin-top: 70px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.img-card, .info-card {
+    width: 280px;
+    padding: 20px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 18px;
+}
+
+.img-card img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.info-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.info-card li {
+    margin: 10px 0;
+}
+
+/* ================= WEBCAM ================= */
+.webcam-box {
+    border-radius: 18px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.webcam-box img {
+    width: 100%;
+}
+
+/* ================= EXPLAIN ================= */
+.explain {
+    max-width: 1000px;
+    margin: 140px auto;
+    padding: 0 20px;
+}
+
+.explain h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.explain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap: 24px;
+}
+
+.explain-card {
+    background: var(--card);
+    padding: 26px;
+    max-width: 700px;
+    font-size: larger;
+    border-radius: 18px;
+}
+
+/* ================= DISCLAIMER ================= */
+.disclaimer {
+    max-width: 900px;
+    margin: 140px auto 60px;
+    padding: 0 20px;
+    color: var(--muted);
+    line-height: 1.8;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    font-size: 13px;
+    color: var(--muted);
+}
+/* Update or add these to your <style> section */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;600&display=swap');
+
+.strategy-container {
+    background: rgba(15, 23, 42, 0.6);
+    border-left: 4px solid var(--primary);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+    /* Clean, modern font */
+    font-family: 'Outfit', sans-serif; 
+    line-height: 1.6;
+    color: #e2e8f0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.strategy-container h2 {
+    color: var(--primary);
+    font-size: 1.2rem;
+    margin-top: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Style for the bullet points generated by Gemini */
+.strategy-container strong {
+    color: var(--primary);
+}
+
+.strategy-container ul {
+    padding-left: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">⚾ SwingAI</div>
+    <div>
+        <a href="#how">How it works</a>
+        <a href="#demo">Demo</a>
+        <a href="#usage">Usage</a>
+        <a href="#demo" class="cta">Try it live</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <h1>Explainable AI for Baseball Swing Analysis</h1>
+    <p>Pose detection → biomechanics → machine learning reasoning</p>
+
+    <div class="hero-actions">
+        <a href="#demo" class="primary">Try Live Demo</a>
+        <a href="#how" class="secondary">How it Works</a>
+    </div>
+</section>
+
+<div class="trust">
+    Built using MediaPipe · Classical ML · Explainable features
+</div>
+
+<section class="flow" id="how">
+    <div class="step">
+        <h3>Pose Detection</h3>
+        <p>Human skeleton landmarks extracted from image or webcam</p>
+    </div>
+    <div class="step">
+        <h3>Biomechanics</h3>
+        <p>Joint angles, arm extension, hip & torso rotation</p>
+    </div>
+    <div class="step">
+        <h3>ML Reasoning</h3>
+        <p>Hit / Swing / Strike with confidence score</p>
+    </div>
+</section>
+
+<div class="card" id="demo">
+    <h2 style="text-align:center;">Run Live Swing Analysis</h2>
+
+    <div class="toggle">
+    <button id="uploadBtn" class="active" onclick="showUpload()">Upload Image</button>
+    <button id="videoBtn" onclick="showVideo()">Video Analysis</button> <button id="webcamBtn" onclick="showWebcam()">Live Webcam</button>
+</div>
+
+<div id="uploadMode">
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <button class="submit">Analyze Swing</button>
+    </form>
+    </div>
+
+<div id="videoMode" style="display:none;">
+    <form id="videoForm" action="/predict_video" method="post" enctype="multipart/form-data" onsubmit="return handleVideoSubmit()">
+        <input type="file" name="video" accept="video/*" required>
+        <div style="margin-top:15px; display: flex; align-items: center; gap: 10px;">
+            <label style="font-size: 14px; color: var(--muted);">Frames (Max 5 for Free Tier):</label>
+            <input type="number" name="num_frames" id="num_frames" value="3" min="1" max="5" 
+                   style="width: 70px; padding: 8px; border-radius: 8px; background: rgba(255,255,255,0.1); color: white; border: none;">
+        </div>
+        <button type="submit" id="videoSubmitBtn" class="submit">Process Video Sequence</button>
+    </form>
+    
+    <div id="videoLoading" style="display:none; margin-top: 20px; text-align: center;">
+        <div class="spinner" style="border: 4px solid rgba(255,255,255,0.1); border-left-color: var(--primary); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+        <p style="color: var(--primary); font-size: 14px; margin-top: 10px;">AI is analyzing frames... This can take 15-20 seconds.</p>
+    </div>
+</div>
+
+<script>
+function handleVideoSubmit() {
+    const frameInput = document.getElementById("num_frames");
+    if (frameInput.value > 5) {
+        alert("Free Tier Limit: Please select 5 frames or fewer to avoid API errors.");
+        return false;
+    }
+    // Disable button and show loader to prevent double-clicks
+    document.getElementById("videoSubmitBtn").disabled = true;
+    document.getElementById("videoSubmitBtn").style.opacity = "0.5";
+    document.getElementById("videoLoading").style.display = "block";
+    return true;
+}
+</script>
+<div id="webcamMode" style="display:none;">
+    <div class="webcam-box"><img id="webcamFeed"></div>
+    <div id="webcamResult" class="result swing"></div>
+</div>
+
+
+    <!-- WEBCAM MODE -->
+    <div id="webcamMode" style="display:none;">
+        <div class="webcam-box">
+            <img id="webcamFeed">
+        </div>
+
+        <div id="webcamResult" class="result swing">
+            Waiting for pose...
+        </div>
+    </div>
+</div>
+
+{% if prediction %}
+    <div class="result {{ prediction|lower }}">
+        Prediction: <strong>{{ prediction }}</strong>
+    </div>
+{% endif %}
+
+{% if original_img %}
+<div class="visual-zone">
+    <div class="img-card">
+        <h3>Original</h3>
+        <img src="{{ original_img }}">
+    </div>
+
+    <div class="info-card">
+        <h3>Model Reasoning</h3>
+        <ul>
+            <li>Elbow Angle: {{ features.elbow_angle|round(2) }}</li>
+            <li>Arm Extension: {{ features.arm_extension|round(2) }}</li>
+            <li>Hip Rotation: {{ features.hip_rotation|round(3) }}</li>
+            <li>Torso Rotation: {{ features.torso_rotation|round(3) }}</li>
+        </ul>
+    </div>
+
+    <div class="img-card">
+        <h3>Skeleton</h3>
+        <img src="{{ skeleton_img }}">
+    </div>
+</div>
+{% endif %}
+
+<section class="explain" id="usage">
+    <h2>Model & Usage Disclaimer</h2>
+
+    <div class="explain-grid">
+        <div class="explain-card">
+            <h4>How the Model Works</h4>
+            <p>
+                This system uses pose landmarks extracted via MediaPipe.
+                Hand-crafted biomechanical features are passed into a
+                classical machine learning classifier to predict swing outcome.
+            </p>
+        </div>
+
+        <div class="explain-card">
+            <h4>Explainability</h4>
+            <p>
+                Predictions are based on interpretable features such as elbow
+                angle, arm extension, and torso rotation — not raw pixels.
+            </p>
+        </div>
+
+        <div class="explain-card">
+            <h4>Intended Usage</h4>
+            <p>
+                Educational demos, ML portfolios, human-motion research,
+                and AI explainability showcases.
+            </p>
+        </div>
+
+        
+    </div>
+</section>
+
+<section class="disclaimer">
+<p>
+This is an experimental AI system built strictly for educational and demonstration purposes.
+Predictions are probabilistic and should not be used for professional coaching, scouting,
+medical evaluation, betting, or performance assessment.
+Not trained on professional datasets.
+Sensitive to camera angle, lighting, and pose visibility.
+</p>
+</section>
+
+<footer>
+BETTERMIND LABS © 2026 — Sports AI Systems
+</footer>
+
+<script>
+let webcamInterval = null;
+
+function hideAll() {
+    document.getElementById("uploadMode").style.display = "none";
+    document.getElementById("videoMode").style.display = "none";
+    document.getElementById("webcamMode").style.display = "none";
+    
+    document.getElementById("uploadBtn").classList.remove("active");
+    document.getElementById("videoBtn").classList.remove("active");
+    document.getElementById("webcamBtn").classList.remove("active");
+    
+    document.getElementById("webcamFeed").src = "";
+    if(webcamInterval) clearInterval(webcamInterval);
+}
+
+function showUpload() {
+    hideAll();
+    document.getElementById("uploadMode").style.display = "block";
+    document.getElementById("uploadBtn").classList.add("active");
+}
+
+function showVideo() {
+    hideAll();
+    document.getElementById("videoMode").style.display = "block";
+    document.getElementById("videoBtn").classList.add("active");
+}
+
+function showWebcam() {
+    hideAll();
+    document.getElementById("webcamMode").style.display = "block";
+    document.getElementById("webcamBtn").classList.add("active");
+    document.getElementById("webcamFeed").src = "/webcam";
+    // ... rest of your existing webcamInterval logic ...
+}
+</script>
+</body>
+</html>

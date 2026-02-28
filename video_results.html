@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Analysis Results</title>
+    <style>
+        body { background: #0f172a; color: white; font-family: sans-serif; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .frame-card { background: #1e293b; padding: 15px; border-radius: 8px; }
+        img { width: 100%; border-radius: 4px; }
+        .strategy { background: #334155; padding: 20px; margin-top: 30px; border-left: 5px solid #22d3ee; }
+    </style>
+</head>
+<body>
+    <h1>Swing Improvement Strategy</h1>
+    <div class="strategy-container">
+    <h2>AI Suggestion</h2>
+    <div style="white-space: pre-line;">
+        {{ strategy }}
+    </div>
+</div>
+
+    <h2>Extracted Frames & Analysis</h2>
+    <div class="grid">
+        {% for frame in frames %}
+        <div class="frame-card">
+            <img src="{{ frame.img }}">
+            <p><strong>Model Score:</strong> {{ frame.score }}%</p>
+            <p style="font-size: 0.9em; color: #cbd5e1;">{{ frame.analysis }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
